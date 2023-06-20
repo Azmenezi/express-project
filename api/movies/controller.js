@@ -45,7 +45,7 @@ exports.updateRating = async (req, res, next) => {
     if (req.body.ratings >= 0 && req.body.ratings <= 10) {
       const updatedMovie = await Movie.updateOne(
         req.movie,
-        { $push: { ratings: [...req.movie.ratings, req.body.ratings] } },
+        { $push: { ratings: req.body.ratings } },
         {
           new: true,
         }
@@ -88,7 +88,6 @@ exports.addCast = async (req, res, next) => {
       {
         $push: {
           cast: [
-            ...req.movie.cast,
             { actorName: req.body.actorName, actorImage: req.body.actorImage },
           ],
         },
